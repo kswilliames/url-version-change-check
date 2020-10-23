@@ -20,22 +20,27 @@ jobs:
         url: https://postman-echo.com/get?version=v1.0.1
         version: v1.0.1
         property: .args.version
+        retry-max: 1
     - name: Check timeout
       uses: ./
       with:
         url: https://postman-echo.com/get?version=v1.0.0
         version: v1.0.1
         property: .args.version
+        retry-max: 1
     - name: Check fail
       uses: ./
       with:
         url: https://postman-echo.com/get?version=v1.0.0
         version: v1.0.1
         property: .noproperty
+        retry-max: 1
     - name: Check max retry and delay
       uses: ./
       with:
         url: https://postman-echo.com/get?version=v1.0.1
+        version: v1.0.0
         retry-max: 5
         retry-delay: 2s
+        start-delay: 2s
         property: .args.version
