@@ -52,7 +52,7 @@ const versionCheck = async () => {
     
         core.info("Success")
     } catch (e) {
-        console.error("Error", e)
+        console.error(e)
         core.setFailed(e.message)
     }
 }
