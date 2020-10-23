@@ -2,18 +2,11 @@ name: Verify action
 
 on: [push]
 
-env:
-  NODE_VERSION: 12.x
-
 jobs:
-  check:
+  check-pass:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-#     - name: Use Node.js ${{ env.NODE_VERSION }}
-#       uses: actions/setup-node@v1
-#       with:
-#         node-version: ${{ env.NODE_VERSION }}
     - name: Check success
       uses: ./
       with:
@@ -21,26 +14,39 @@ jobs:
         version: v1.0.1
         property: .args.version
         retry-max: 1
+  check-timeout:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Check timeout
       uses: ./
       with:
         url: https://postman-echo.com/get?version=v1.0.0
         version: v1.0.1
         property: .args.version
-        retry-max: 1
-    - name: Check fail
-      uses: ./
-      with:
-        url: https://postman-echo.com/get?version=v1.0.0
-        version: v1.0.1
-        property: .noproperty
-        retry-max: 1
-    - name: Check max retry and delay
-      uses: ./
-      with:
-        url: https://postman-echo.com/get?version=v1.0.1
-        version: v1.0.0
         retry-max: 5
-        retry-delay: 2s
-        start-delay: 2s
-        property: .args.version
+        retry-delay: 1s
+  check-fail:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Check fail
+        uses: ./
+        with:
+          url: https://postman-echo.com/get?version=v1.0.0
+          version: v1.0.1
+          property: .noproperty
+          retry-max: 1
+  check-retry-delay:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Check max retry and delay
+        uses: ./
+        with:
+          url: https://postman-echo.com/get?version=v1.0.1
+          version: v1.0.0
+          retry-max: 5
+          retry-delay: 2s
+          start-delay: 2s
+          property: .args.version
