@@ -10,7 +10,7 @@ const exec = __webpack_require__(129).execSync
 const duration = __webpack_require__(443)
 
 const curl = async (url, property) => {
-    const command = `curl --fail -s '${url}' | jq '${property}'`
+    const command = `curl --fail -s '${url}' | jq -r '${property}'`
     core.debug(`Running command: ${command}`)
     return exec(command).toString()
 }
