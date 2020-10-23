@@ -3,7 +3,7 @@ const exec = require("child_process").execSync
 const duration = require("duration-js")
 
 const curl = async (url, property) => {
-    const command = `curl --fail -s '${url}' | jq -r '${property}'`
+    const command = `curl --fail -s '${url}' | jq -j '${property}'`
     core.debug(`Running command: ${command}`)
     return exec(command).toString()
 }
