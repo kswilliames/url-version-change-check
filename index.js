@@ -1,16 +1,11 @@
 const core = require("@actions/core")
-const proc = require("child_process")
+const exec = require("child_process").execSync
 const duration = require("duration-js")
-
-const processConfig = {
-    stdio: "inherit",
-    encoding: "utf8",
-}
 
 const curl = async (url, property) => {
     const command = `curl --fail -s '${url}' | jq '${property}'`
     core.debug(`Running command: ${command}`)
-    return proc.execSync(command, processConfig)
+    return exec(command).toString()
 }
 
 const wait = async (ms) => {
