@@ -17,7 +17,7 @@ const processConfig = {
 const curl = async (url, property) => {
     const command = `curl --fail -sv '${url}' | jq '${property}'`
     core.debug(`Running command: ${command}`)
-    return proc.execSync(command, processConfig)
+    return proc.execSync(command, processConfig).toString()
 }
 
 const wait = async (ms) => {
