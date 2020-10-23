@@ -23,6 +23,7 @@ const checkUrl = async (url, version, { retryMax, retryDelay, startDelay }, prop
     while (count < retryMax) {
         const result = await curl(url, property)
         core.info(`Checked upgrade to version ${version} with result ${result}`)
+        console.log(result === version)
         if (result === version) return
         count++
         await wait(retryDelay)
