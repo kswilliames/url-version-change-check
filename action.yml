@@ -1,0 +1,32 @@
+name: 'Version Change Check'
+description: 'Check a given URL to do a version check post-deploy'
+author: "Kieran Williames"
+inputs:
+  url:
+    description: Target URL
+    required: true
+  version:
+    description: Target version
+    required: true
+  retry-max:
+    description: Number of retries
+    required: false
+    default: '10'
+  retry-delay:
+    description: Delay between retries
+    required: false
+    default: '30s'
+  start-delay:
+    description: Delay before start
+    required: false
+    default: '0s'
+  property:
+    description: Version property on response JSON
+    required: false
+    default: .version
+branding:
+  icon: check
+  color: purple
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

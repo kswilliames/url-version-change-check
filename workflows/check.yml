@@ -1,0 +1,41 @@
+name: Verify action
+
+on: [push]
+
+env:
+  NODE_VERSION: 12.x
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ env.NODE_VERSION }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ env.NODE_VERSION }}
+    - name: Check success
+      uses: ./
+      with:
+        url: https://postman-echo.com/get?version=v1.0.1
+        version: v1.0.1
+        property: .args.version
+    - name: Check timeout
+      uses: ./
+      with:
+        url: https://postman-echo.com/get?version=v1.0.0
+        version: v1.0.1
+        property: .args.version
+    - name: Check fail
+      uses: ./
+      with:
+        url: https://postman-echo.com/get?version=v1.0.0
+        version: v1.0.1
+        property: .noproperty
+    - name: Check max retry and delay
+      uses: ./
+      with:
+        url: https://postman-echo.com/get?version=v1.0.1
+        retry-max: 5
+        retry-delay: 2s
+        property: .args.version
