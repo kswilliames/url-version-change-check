@@ -6,18 +6,13 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186)
-const proc = __webpack_require__(129)
+const exec = __webpack_require__(129).execSync
 const duration = __webpack_require__(443)
 
-const processConfig = {
-    stdio: "inherit",
-    encoding: "utf8",
-}
-
 const curl = async (url, property) => {
-    const command = `curl --fail -sv '${url}' | jq '${property}'`
+    const command = `curl --fail -s '${url}' | jq '${property}'`
     core.debug(`Running command: ${command}`)
-    return proc.execSync(command, processConfig).toString()
+    return exec(command).toString()
 }
 
 const wait = async (ms) => {
